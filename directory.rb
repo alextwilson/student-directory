@@ -1,5 +1,41 @@
 @students = []
 
+def interactive_menu
+  loop do
+    print_menu
+    process(STDIN.gets.chomp)
+  end
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
+  puts "9. Exit"
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "3"
+    save_students
+  when "4"
+    load_students
+  when "9"
+    exit
+  else
+    puts "I don't know what you meant, try another option"
+  end
+end
+
+def populate_students(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
+end
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -19,8 +55,10 @@ def input_students
   end
 end
 
-def populate_students(name, cohort)
-  @students << {name: name, cohort: cohort.to_sym}
+def show_students
+  print_header
+  print_students_list
+  print_footer
 end
 
 def print_header
@@ -58,37 +96,6 @@ def print_short_names
   end
 end
 
-def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit"
-end
-
-def show_students
-  print_header
-  print_students_list
-  print_footer
-end
-
-def process(selection)
-  case selection
-  when "1"
-    input_students
-  when "2"
-    show_students
-  when "3"
-    save_students
-  when "4"
-    load_students
-  when "9"
-    exit
-  else
-    puts "I don't know what you meant, try another option"
-  end
-end
-
 def save_students
   file = File.open("students.csv", "w")
   @students.each do |student|
@@ -97,6 +104,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Students saved to students.csv"
 end
 
 def load_students(filename = "students.csv")
@@ -106,6 +114,7 @@ def load_students(filename = "students.csv")
     populate_students(name, cohort)
   end
   file.close
+  puts "Students loaded from #{filename}"
 end
 
 def try_load_students
@@ -127,13 +136,5 @@ def try_load_students
   end
 end
 
-def interactive_menu
-  loop do
-    print_menu
-    process(STDIN.gets.chomp)
-  end
-end
-
 try_load_students
 interactive_menu
-
