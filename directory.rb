@@ -10,8 +10,10 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Show students whose names begin with a certain letter"
+  puts "4. Show students with short names only"
+  puts "5. Save the list to students.csv"
+  puts "6. Load the list from students.csv"
   puts "9. Exit"
 end
 
@@ -22,8 +24,12 @@ def process(selection)
   when "2"
     show_students
   when "3"
-    save_students
+    print_begins_with
   when "4"
+    print_short_names
+  when "5"
+    save_students
+  when "6"
     load_students
   when "9"
     exit
