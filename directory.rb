@@ -26,7 +26,20 @@ def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
 
-students = input_students
+def print_begins_with
+  puts "Which letter do you want to show names beginning with?"
+  letter = gets.chomp
+  puts "Here are the students whose names begin with #{letter.upcase}:"
+  @students.each do |student|
+    if student[:name].slice(0).upcase == letter.upcase
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
+end
+
+@students = input_students
 print_header
-print(students)
-print_footer(students)
+print(@students)
+print_footer(@students)
+print_begins_with
+
