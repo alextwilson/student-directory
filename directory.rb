@@ -16,6 +16,7 @@ def print_menu
   puts "4. Show students with short names only"
   puts "5. Save the list of students"
   puts "6. Load a list of students"
+  puts "7. View source code"
   puts "9. Exit"
 end
 
@@ -37,6 +38,8 @@ def process(selection)
     puts "What file would you like to load?"
     filename = STDIN.gets.chomp
     load_students(filename)
+  when "7"
+    view_source_code
   when "9"
     exit
   else
@@ -137,6 +140,13 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit
   end
+end
+
+def view_source_code
+  File.open(__FILE__).each do |line|
+    puts line
+  end
+  puts "\n"
 end
 
 try_load_students
