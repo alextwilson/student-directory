@@ -1,3 +1,5 @@
+require "csv"
+
 @students = []
 
 def interactive_menu
@@ -107,23 +109,14 @@ def print_short_names
 end
 
 def save_students(filename)
-  File.open(filename, "w") do |file|
-    @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
-    end
+  CSV.open(filename, "w") do |row|
+    @students.each { |student| row << [student[:name], student[:cohort]] }
   end
   puts "Students saved to #{filename}"
 end
 
 def load_students(filename)
-  File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-      populate_students(name, cohort)
-    end
-  end
+  CSV.foreach(filename) { |name, cohort| populate_students(name, cohort) }
   puts "Students loaded from #{filename}"
 end
 
